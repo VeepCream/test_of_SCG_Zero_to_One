@@ -14,7 +14,7 @@ import {
 } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage';
 
-import AppNavigation from '../Stacks/HomeStack'
+import AppNavigation from '../Stacks/BottomTabStack'
 
 const navReducer = createNavigationReducer(AppNavigation)
 const appReducer = combineReducers({

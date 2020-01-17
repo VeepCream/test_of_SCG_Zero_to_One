@@ -1,20 +1,44 @@
-import React, { FunctionComponent, useState } from 'react';
-import { View } from 'react-native';
+import React, { FunctionComponent, useState, useEffect } from 'react';
+import { View, FlatList } from 'react-native';
 import { Button, Text } from 'native-base';
+import { callAPI } from '../Libs/CallAPI';
+import DetailComponent from '../Components/DetailComponent';
 
-// our components props accept a number for the initial value
-const ListScreen:FunctionComponent<null> = () => {
-  // since we pass a number here, clicks is going to be a number.
-  // setClicks is a function that accepts either a number or a function returning
-  // a number
+const ListScreen: any = () => {
+
+  const [data, setdata] = useState([])
+
+  useEffect(() => {
+    if (data.length === 0) {
+      callAPI("getMap").then((value: any) => {
+        //console.log("value",value)
+        setdata(value.results)
+      }).catch(() => {
+        console.log("catch")
+      })
+    }
+  })
+
+  const renderRow = ({ item, index }: any) => {
+    return <DetailComponent data={item} />
+  }
+
+  //console.log(data)
+
   return (
-      <View>
-        <Button>
-          <Text>
-            {"test"}
-          </Text>
-        </Button>
-      </View>
+    <View>
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        data={data}
+        renderItem={renderRow}
+        keyExtractor={(data: any) => { return data.id + "game" }}
+      />
+    </View>
   )
 }
+
+ListScreen.navigationOptions = ({ navigation }: any) => ({
+  title: "List Places",
+  headerLeft: null
+});
 export default ListScreen

@@ -1,26 +1,20 @@
 import React from 'react'
 import { createAppContainer } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
-import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
+import { Dimensions, View, Text } from 'react-native'
+import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from '../Screens/HomeScreen'
-import ListScreen from '../Screens/ListScreen'
 
-const TabBarComponent = (props: any) => <BottomTabBar {...props} />;
+var { height, width } = Dimensions.get('window');
 
-const HomeStack = createBottomTabNavigator(
+const HomeStack = createStackNavigator(
     {
         HomeScreen: {
-            screen: HomeScreen
-        },
-        ListScreen: {
-            screen: ListScreen
-        },
+            screen: HomeScreen,
+        }
     },
     {
         initialRouteName: "HomeScreen",
-        tabBarComponent: props => (
-            <TabBarComponent {...props} style={{ borderTopColor: '#605F60' }} />
-        ),
+
 
     }
 )
